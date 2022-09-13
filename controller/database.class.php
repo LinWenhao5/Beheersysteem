@@ -5,6 +5,8 @@ class Connection
     private $username = "root";
     private $password = "";
     private $dbname = "test";
+    private $status = False;
+    public $user;
 
     function __construct() {
         $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
@@ -16,7 +18,22 @@ class Connection
         }
     }
 
-    function insert($User, $Koelkast, $Content, $Artikelnummer, $Prijs, $Energie, $Inhoud, $Time) {
+    function key() {
+        $user = $this->get_user();
+        $len = count($user) - 1;
+        for ($i = 0; $i <= $len; $i++) {
+            if ($_SESSION['key'] == $user[$i]['user_key']) {
+                $this -> status = True;
+                $this -> user = $user[$i]['user'];
+            }
+        }
+        if (!$this->status) {
+            header('location:index.php');
+            exit;
+        }
+    }
+
+    function insert_koelkast($User, $Koelkast, $Content, $Artikelnummer, $Prijs, $Energie, $Inhoud, $Time) {
         $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
         $sql = "INSERT INTO koelkast (User, Koelkast, Content, Artikelnummer, Prijs, Energie, Inhoud, Time) VALUES (?,?,?,?,?,?,?,?)";
         $stmt = $conn -> prepare($sql);
@@ -25,7 +42,16 @@ class Connection
         $conn -> close();
     }
 
-    function get_data() {
+    function insert_inner_j($k_id, $v_id) {
+        $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
+        $sql = "INSERT INTO inner_j (k_id, v_id) VALUES (?,?)";
+        $stmt = $conn -> prepare($sql);
+        $stmt -> bind_param("ss", $k_id, $v_id);
+        $stmt -> execute();
+        $conn -> close();
+    }
+
+    function get_koelkast_data() {
         $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
         $sql = "SELECT * FROM koelkast";
         $result = $conn->query($sql);
@@ -33,6 +59,28 @@ class Connection
         $conn -> close();
         return $data;
     }
+
+    function get_one_koelkast($id) {
+        $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
+        $sql = "SELECT * FROM koelkast WHERE Artikelnummer = '{$id}'";
+        $result = $conn->query($sql);
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+        $conn -> close();
+        return $data;
+    }
+
+    function get_all_data() {
+        $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
+        $sql = "SELECT koelkast.koelkast, koelkast.Artikelnummer, verzekering.naam
+                FROM koelkast
+                INNER JOIN inner_j ON koelkast.Artikelnummer = k_id
+                INNER JOIN verzekering ON verzekering.ID = v_id";
+        $result = $conn->query($sql);
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+        $conn -> close();
+        return $data;
+    }
+    
 
     function clear_data() {
         $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
@@ -43,8 +91,10 @@ class Connection
 
     function del($ID) {
         $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
-        $sql = "DELETE FROM koelkast WHERE ID = {$ID}";
-        $conn -> query($sql);
+        $sql_koelkast = "DELETE FROM koelkast WHERE Artikelnummer = '{$ID}'";
+        $conn -> query($sql_koelkast);
+        $sql_inner_j = "DELETE FROM inner_j WHERE K_id = '{$ID}'";
+        $conn -> query($sql_inner_j);
         $conn -> close();
     }
 

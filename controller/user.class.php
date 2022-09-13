@@ -7,8 +7,6 @@ include('database.class.php');
 
 class user extends Connection
 {
-        public $status;
-
         function check($username, $password) {
              $data = $this->get_user();
              $len = count($data) - 1;
@@ -24,17 +22,6 @@ class user extends Connection
                  }
              }
         }
-
-        function key() {
-            $data = $this->get_user();
-            $len = count($data) - 1;
-            for ($i = 0; $i <= $len; $i++) {
-                if ($_SESSION['key'] == $user[$i]['user_key']) {
-                    return TURE;
-                }
-            }
-        }
-
 
         function GetRandStr($length){
         $str = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
