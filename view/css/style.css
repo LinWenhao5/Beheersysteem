@@ -9,8 +9,49 @@
     justify-content: space-around;
 }
 
-.login {
+.login, .edit {
     display: flex;
     justify-content: center;
-    align-items: center;
+}
+
+
+body {
+    background-color: #565656;
+}
+
+p, form, a{
+    color: #efefef;
+    font-family: "Lucida Console", "Courier New", monospace;
+}
+
+strong {
+    color: #e0e1ff;
+    font-family: "Times New Roman", Times, serif;
+}
+
+a {
+    outline-style: solid;
+    text-decoration: none;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+
+a:visited {
+    color: #efefef;
+}
+
+a:focus {
+    border-bottom: 1px solid;
+    background: #bae498;
+}
+
+a:hover {
+    border-bottom: 1px solid;
+    background: #868686;
+}
+
+a:active {
+    background: #265301;
+    color: #cdfeaa;
 }
