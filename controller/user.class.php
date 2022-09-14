@@ -18,7 +18,6 @@ class user extends Connection
                      $_SESSION['key'] = $key;
                  } else {
                      $this->update_key($data[$i]['user'], 0);
-                     echo '密码错误';
                  }
              }
         }

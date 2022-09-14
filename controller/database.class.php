@@ -33,11 +33,11 @@ class Connection
         }
     }
 
-    function insert_koelkast($User, $Koelkast, $Content, $Artikelnummer, $Prijs, $Energie, $Inhoud, $Time) {
+    function insert_koelkast($User, $Koelkast, $Content, $Artikelnummer, $Prijs, $Energie, $Inhoud, $Reparatie, $Time) {
         $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
-        $sql = "INSERT INTO koelkast (User, Koelkast, Content, Artikelnummer, Prijs, Energie, Inhoud, Time) VALUES (?,?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO koelkast (User, Koelkast, Content, Artikelnummer, Prijs, Energie, Inhoud, Reparatie, Time) VALUES (?,?,?,?,?,?,?,?,?)";
         $stmt = $conn -> prepare($sql);
-        $stmt -> bind_param("ssssssss", $User, $Koelkast, $Content, $Artikelnummer, $Prijs, $Energie, $Inhoud, $Time);
+        $stmt -> bind_param("sssssssss", $User, $Koelkast, $Content, $Artikelnummer, $Prijs, $Energie, $Inhoud, $Reparatie, $Time);
         $stmt -> execute();
         $conn -> close();
     }
@@ -51,9 +51,33 @@ class Connection
         $conn -> close();
     }
 
-    function get_koelkast_data() {
+    function update_data($id, $Koelkast, $Content, $Prijs, $Energie, $Inhoud) {
         $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
-        $sql = "SELECT * FROM koelkast";
+        $sql = "UPDATE koelkast SET Koelkast=?, Content=?, Prijs=?, Energie=?, Inhoud=? WHERE Artikelnummer=?";
+        $stmt= $conn->prepare($sql);
+        $stmt->bind_param("ssssss", $Koelkast, $Content, $Prijs, $Energie, $Inhoud, $id);
+        $stmt->execute();
+        $conn -> close();
+    }
+
+    function update_rep_data($id, $content) {
+        $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
+        $sql = "UPDATE koelkast SET Reparatie =? WHERE Artikelnummer=?";
+        $stmt= $conn->prepare($sql);
+        $stmt->bind_param("ss",$content, $id);
+        $stmt->execute();
+        $conn -> close();
+    }
+
+    function clear_v_data($id) {
+        $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
+        $sql = "DELETE FROM inner_j WHERE k_id='{$id}'";
+        $conn -> query($sql);
+        $conn -> close();
+    }
+
+    function get_koelkast_data($sql) {
+        $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
         $result = $conn->query($sql);
         $data = $result->fetch_all(MYSQLI_ASSOC);
         $conn -> close();
@@ -80,13 +104,14 @@ class Connection
         $conn -> close();
         return $data;
     }
-    
 
-    function clear_data() {
+    function get_rep_data() {
         $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
-        $sql = "TRUNCATE TABLE koelkast";
-        $conn -> query($sql);
+        $sql = "SELECT * FROM koelkast WHERE NOT Reparatie = 'geen'";
+        $result = $conn->query($sql);
+        $data = $result->fetch_all(MYSQLI_ASSOC);
         $conn -> close();
+        return $data;
     }
 
     function del($ID) {

@@ -3,9 +3,25 @@ session_start();
 include('../controller/database.class.php');
 $db = new Connection();
 $db -> key();
-echo "product_id: {$_GET['edit']}";
-
-$data = $db -> get_koelkast_data($_GET['edit']);
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    $_SESSION['edit'] =  $_GET['edit'];
+}
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $db->update_data($_SESSION['edit'], $_POST['koelkast'], $_POST['content'],  $_POST['prijs'], $_POST['energie'], $_POST['inhoud']);
+    $db->clear_v_data($_SESSION['edit']);
+    if (isset($_POST['verzekering_A'])) {
+        $db->insert_inner_j($_SESSION['edit'], $_POST['verzekering_A']);
+    }
+    if (isset($_POST['verzekering_B'])) {
+        $db->insert_inner_j($_SESSION['edit'], $_POST['verzekering_B']);
+    }
+    if (isset($_POST['verzekering_C'])) {
+        $db->insert_inner_j($_SESSION['edit'], $_POST['verzekering_C']);
+    }
+    header('location:homepage.php');
+}
+echo "Artikel_Nr: {$_SESSION['edit']}";
+$data = $db -> get_one_koelkast($_SESSION['edit']);
 ?>
 
 <form method="post" action="edit.php">
