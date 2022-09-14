@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/style.css">
-    <title>Document</title>
+    <title>Hoofdpagina</title>
 </head>
 <body>
     <div class="top">
@@ -132,38 +132,43 @@
                 </tr>
                     <td><p>ARTIKEL_NR:</p></td>
                     <td><strong>{$row['Artikelnummer']}</strong></td>
-                    <td><p>PRIJS(euro):</p></td>
-                    <td><strong>{$row['Prijs']}</strong></td>
+                    <td><p>PRIJS:</p></td>
+                    <td><strong>€{$row['Prijs']}</strong></td>
                 </tr>
                 <tr>
                     <td><p>ENERGIE_LABEL:</p></td>
                     <td><strong>{$row['Energie']}</strong></td>
-                    <td><p>NETTO_INHOUD(L):</p></td>
-                    <td><strong>{$row['Inhoud']}</strong></td>
+                    <td><p>NETTO_INHOUD:</p></td>
+                    <td><strong>{$row['Inhoud']} L</strong></td>
                 </tr>
                 <tr>
-                    <td><p>UPDATE_TIME:(L):</p></td>
+                    <td><p>UPDATE_TIME:</p></td>
                     <td><strong>{$row['Time']}</strong></td>
                 </tr>
             </table>
-            <strong>BESCHRIJVING:</strong>
-            <p>{$row['Content']}</p>
-            <p><strong>Verzekering(en):</strong></p>";
+            <p>BESCHRIJVING:</p>
+            <p><strong>{$row['Content']}</strong></p>
+            <p>VERZERKERING(en):</p>";
         foreach ($db->get_all_data() as $verzekering) {
             if ($row['Artikelnummer'] == $verzekering['Artikelnummer']) {
-                echo"<p>{$verzekering['naam']}</p>";
+                echo /** @lang text */
+                "<p><strong>- {$verzekering['naam']}</strong></strong></p>";
             }
         }
         if ($row['Reparatie'] == 'geen') {
-            echo "<a href='aanvragen.php?Rep={$row['Artikelnummer']}'>Reparatie_aanvraag</a>";
+            echo /** @lang text */
+            "<a href='aanvragen.php?Rep={$row['Artikelnummer']}'>Reparatie_aanvraag</a>";
         } else {
-            echo"<p><strong>Reden voor reparatie:</strong></p>
-                      <p>{$row['Reparatie']}</p>";
+            echo /** @lang text */
+            "
+                      <p>REDEN VOOR REPARATIE:</p>
+                      <p><strong>{$row['Reparatie']}</strong></p>";
         }
         echo /** @lang text */
         "<a href='homepage.php?Del={$row['Artikelnummer']}'>Verwijderen</a>
-                    <a href='edit.php?edit={$row['Artikelnummer']}'>Wijzigen</a>";
-        echo "<HR></div>";
+                    <a href='edit.php?edit={$row['Artikelnummer']}'>Wijzigen</a>
+                    <HR></div>
+                    ";
     }
     ?>
     </div>
