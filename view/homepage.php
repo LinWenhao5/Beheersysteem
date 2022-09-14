@@ -28,7 +28,7 @@
     </div>
     <hr>
     <div class="container">
-        <form class="child_two" method="post" action="homepage.php">
+        <form class="child_one" method="post" action="homepage.php">
             <h1>Toevoegen</h1>
             <label for="koelkast">Koelkast:</label>
             <input type="text" name="koelkast">
@@ -118,20 +118,37 @@
         }
         header("Refresh:0");
     }
-    echo '<div class="child_one">';
+    echo '<div class="child_two">';
     foreach ($db->get_koelkast_data($sql) as $row) {
         echo /** @lang text */
         "<div class='child'>
-            <p>USER:<strong>{$row['User']}</strong><br>
-                  KOELKAST: <strong>{$row['Koelkast']}</strong><br>
-                  BESCHRIJVING: <strong>{$row['Content']}</strong><br>
-                  ARTIKEL_NR: <strong>{$row['Artikelnummer']}</strong><br>
-                  PRIJS(euro): <strong>{$row['Prijs']}</strong><br>
-                  ENERGIE_LABEL: <strong>{$row['Energie']}</strong><br>
-                  NETTO_INHOUD(L): <strong>{$row['Inhoud']}</strong><br>
-                  UPDATE_TIME: <strong>{$row['Time']}</strong><br>
-                  </p>
-                  <strong>Verzekering(en):</strong>";
+            <table>
+                <tr>
+                    <td><p>USER:</p></td>
+                    <td><strong>{$row['User']}</strong></td>
+                    <td><p>KOELKAST:</p></td>
+                    <td><strong>{$row['Koelkast']}</strong></td>
+                </tr>
+                </tr>
+                    <td><p>ARTIKEL_NR:</p></td>
+                    <td><strong>{$row['Artikelnummer']}</strong></td>
+                    <td><p>PRIJS(euro):</p></td>
+                    <td><strong>{$row['Prijs']}</strong></td>
+                </tr>
+                <tr>
+                    <td><p>ENERGIE_LABEL:</p></td>
+                    <td><strong>{$row['Energie']}</strong></td>
+                    <td><p>NETTO_INHOUD(L):</p></td>
+                    <td><strong>{$row['Inhoud']}</strong></td>
+                </tr>
+                <tr>
+                    <td><p>UPDATE_TIME:(L):</p></td>
+                    <td><strong>{$row['Time']}</strong></td>
+                </tr>
+            </table>
+            <strong>BESCHRIJVING:</strong>
+            <p>{$row['Content']}</p>
+            <p><strong>Verzekering(en):</strong></p>";
         foreach ($db->get_all_data() as $verzekering) {
             if ($row['Artikelnummer'] == $verzekering['Artikelnummer']) {
                 echo"<p>{$verzekering['naam']}</p>";

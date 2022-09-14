@@ -9,7 +9,8 @@
     justify-content: space-around;
 }
 
-.login, .edit {
+
+.login, .edit, .aanvragen {
     display: flex;
     justify-content: center;
 }

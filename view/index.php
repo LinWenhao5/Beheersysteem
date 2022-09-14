@@ -24,12 +24,15 @@
     ?>
     <div class="login">
         <form method="post" action="index.php">
-            <label for="usename">Gebruiksnaam</label>
+            <h1>Beheersysteem</h1>
+            <p><strong>Bob Vance Koelkasten</strong></p>
+            <br>
+            <label for="usename">Gebruiksnaam</label><br>
             <input type="text" name="username">
             <br>
-            <label for="password">Wachtwoord</label>
+            <label for="password">Wachtwoord</label><br>
             <input type="password" name="password">
-            <br>
+            <br><br>
             <input type="submit" value="inloggen">
         </form>
     </div>
