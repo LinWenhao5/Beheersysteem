@@ -10,7 +10,7 @@
 }
 
 
-.login, .edit, .aanvragen {
+.login, .edit, .aanvragen, .contact {
     display: flex;
     justify-content: center;
 }

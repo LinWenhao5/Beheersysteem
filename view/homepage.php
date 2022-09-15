@@ -5,6 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" type="image/x-icon" href="image/koelkast-icoon.jpg">
     <link rel="stylesheet" href="css/style.css">
     <title>Hoofdpagina</title>
 </head>
@@ -23,6 +24,7 @@
             <input type="submit" value="sorteren">
         </form>
         <a href="rep_list.php">Reparatielijst</a>
+        <a href="bericht.php">berichten</a>
         <a href="contact.php">Contact</a>
         <a href="index.php">Uitloggen</a>
     </div>
@@ -54,6 +56,12 @@
             <br><br>
             <label for="inhoud">Netto_inhoud (liter):</label>
             <input type="number" name="inhoud">
+            <br><br>
+            <label for="Conditie">Conditie</label>
+            <select name="Conditie">
+                <option value="Nieuw">Nieuw</option>
+                <option value="Gebruikt">Gebruikt</option>
+            </select>
             <br><br>
             <input type="checkbox" name="verzekering_A" value="1">
             <label for="vehicle1">verzekering_A</label><br>
@@ -104,6 +112,7 @@
             intval($_POST['prijs']),
             $_POST['energie'],
             intval($_POST['inhoud']),
+            $_POST['Conditie'],
             $rep,
             $time
         );
@@ -142,6 +151,8 @@
                     <td><strong>{$row['Inhoud']} L</strong></td>
                 </tr>
                 <tr>
+                    <td><p>CONDITIE:</p></td>
+                    <td><strong>{$row['Conditie']}</strong></td>
                     <td><p>UPDATE_TIME:</p></td>
                     <td><strong>{$row['Time']}</strong></td>
                 </tr>

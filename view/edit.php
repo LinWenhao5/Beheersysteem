@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Wijzigen</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="image/koelkast-icoon.jpg">
 </head>
 <body>
     <?php
@@ -18,7 +19,7 @@
         $_SESSION['edit'] =  $_GET['edit'];
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $db->update_data($_SESSION['edit'], $_POST['koelkast'], $_POST['content'],  $_POST['prijs'], $_POST['energie'], $_POST['inhoud']);
+        $db->update_data($_SESSION['edit'], $_POST['koelkast'], $_POST['content'],  $_POST['prijs'], $_POST['energie'], $_POST['inhoud'], $_POST['Conditie']);
         $db->clear_v_data($_SESSION['edit']);
         if (isset($_POST['verzekering_A'])) {
             $db->insert_inner_j($_SESSION['edit'], $_POST['verzekering_A']);
@@ -58,6 +59,12 @@
         <br><br>
         <label for="inhoud">Netto_inhoud (liter):</label>
         <input type="number" name="inhoud" value="<?php echo $data[0]["Inhoud"] ?>"">
+        <br><br>
+        <label for="Conditie">Conditie</label>
+        <select name="Conditie">
+            <option value="Nieuw">Nieuw</option>
+            <option value="Gebruikt">Gebruikt</option>
+        </select>
         <br><br>
         <input type="checkbox" name="verzekering_A" value="1">
         <label for="vehicle1">verzekering_A</label><br>

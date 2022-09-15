@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="image/koelkast-icoon.jpg">
     <title>Reparatielijst</title>
 </head>
 <body>
@@ -18,7 +19,7 @@
     if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['done'])) {
         $content = 'geen';
         $db -> update_rep_data($_GET['done'], $content);
-        header('location:homepage.php');
+        header('location:rep_list.php');
     }
     foreach ($db->get_rep_data() as $row) {
         echo "<p>product naam: <strong>{$row['Koelkast']}</strong></p>
