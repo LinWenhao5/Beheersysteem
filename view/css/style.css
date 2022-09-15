@@ -17,16 +17,16 @@
 
 
 body {
-    background-color: #565656;
+    background-color: rgb(56, 56, 56);
 }
 
 p, form, a{
-    color: #efefef;
+    color: rgb(255, 255, 255);
     font-family: "Lucida Console", "Courier New", monospace;
 }
 
 strong {
-    color: #e0e1ff;
+    color: #d6c2ff;
     font-family: "Times New Roman", Times, serif;
 }
 

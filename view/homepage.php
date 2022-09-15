@@ -26,7 +26,7 @@
         <a href="rep_list.php">Reparatielijst</a>
         <a href="bericht.php">berichten</a>
         <a href="contact.php">Contact</a>
-        <a href="index.php">Uitloggen</a>
+        <a href="index.php?uitloggen=true">Uitloggen</a>
     </div>
     <hr>
     <div class="container">

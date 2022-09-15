@@ -11,12 +11,15 @@
 </head>
 <body>
     <?php
-
-    use user\user;
     include('../controller/user.class.php');
-
-    session_start();
+    use user\user;
     $user = new user();
+    session_start();
+
+    if ($_SERVER["REQUEST_METHOD"] == "GET" && $_GET['uitloggen']) {
+        $user -> uitloggen();
+    }
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user -> check($_POST['username'], $_POST['password']);
     }

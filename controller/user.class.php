@@ -22,6 +22,11 @@ class user extends Connection
              }
         }
 
+        function uitloggen() {
+            session_destroy();
+            header('location:index.php');
+        }
+
         function GetRandStr($length){
         $str = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         $len = strlen($str)-1;
